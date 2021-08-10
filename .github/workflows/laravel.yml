@@ -10,6 +10,7 @@ jobs:
   laravel-tests:
 
     runs-on: ubuntu-latest
+    
 
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
@@ -33,32 +34,28 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
-    // .github/workflows/laravel.yml
+  build:
+      runs-on: ubuntu-latest
 
-build:
-  runs-on: ubuntu-latest
+      steps:
 
-  steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Checkout
+      - name: Setup Node.js
 
-      uses: actions/checkout@v2
+        uses: actions/setup-node@v2-beta
+        
+        with:
+           node-version: '12'
+           check-latest: true
+      - name: Install NPM dependencies
+        run: npm install
+      - name: Compile assets for production
+        run: npm run production
+        
 
-    - name: Setup Node.js
-
-      uses: actions/setup-node@v2-beta
-
-      with:
-
-        node-version: '12'
-
-        check-latest: true
-
-    - name: Install NPM dependencies
-
-      run: npm install
-
-    - name: Compile assets for production
-
-      run: npm run production
+     
   
+  
+ 
